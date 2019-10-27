@@ -1,0 +1,4 @@
+C:\Users\snyde\NSS\workspace\exercises\DepartmentsEmployees\DepartmentsEmployees\bin\Debug\netcoreapp3.0\DepartmentsEmployees.exe
+C:\Users\snyde\NSS\workspace\exercises\DepartmentsEmployees\DepartmentsEmployees\obj\Debug\netcoreapp3.0\DepartmentsEmployees.csprojAssemblyReference.cache
+C:\Users\snyde\NSS\workspace\exercises\DepartmentsEmployees\DepartmentsEmployees\obj\Debug\netcoreapp3.0\DepartmentsEmployees.AssemblyInfoInputs.cache
+C:\Users\snyde\NSS\workspace\exercises\DepartmentsEmployees\DepartmentsEmployees\obj\Debug\netcoreapp3.0\DepartmentsEmployees.AssemblyInfo.cs
