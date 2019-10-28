@@ -231,12 +231,27 @@ namespace DepartmentsEmployees.Data
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
+                    cmd.CommandText = "SELECT Id, FirstName, LastName FROM Employee " +
+                        "WHERE Id = @id";
+                    cmd.Parameters.Add(new SqlParameter("@id", id));
 
-                    /*
-                     * TODO: Complete this method
-                     */
+                    SqlDataReader reader = cmd.ExecuteReader();
 
-                    return null;
+                    Employee employee = null;
+                    
+                    if (reader.Read())
+                    {
+                        employee = new Employee
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
+                            LastName = reader.GetString(reader.GetOrdinal("LastName"))
+                        };
+                    }
+
+                    reader.Close();
+
+                    return employee;
                 }
             }
         }
@@ -253,13 +268,31 @@ namespace DepartmentsEmployees.Data
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
+                    cmd.CommandText = "SELECT e.Id, e.FirstName, e.LastName, e.DepartmentId, d.DeptName" +
+                       "               FROM Employee e LEFT JOIN Department d ON e.DepartmentId = d.Id";
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    List<Employee> employees = new List<Employee>();
 
-                    /*
-                     * TODO: Complete this method
-                     *  Look at GetAllEmployeesWithDepartmentByDepartmentId(int departmentId) for inspiration.
-                     */
+                    while (reader.Read())
+                    {
+                        Employee employee = new Employee
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
+                            LastName = reader.GetString(reader.GetOrdinal("LastName")),
+                            DepartmentId = reader.GetInt32(reader.GetOrdinal("DepartmentId")),
+                            Department = new Department
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                DeptName = reader.GetString(reader.GetOrdinal("DeptName"))
+                            }
+                        };
+                        employees.Add(employee);
+                    }
 
-                    return null;
+                    reader.Close();
+
+                    return employees;
                 }
             }
         }
@@ -318,10 +351,20 @@ namespace DepartmentsEmployees.Data
         /// </summary>
         public void AddEmployee(Employee employee)
         {
-            /*
-             * TODO: Complete this method by using an INSERT statement with SQL
-             *  Remember to use SqlParameters!
-             */
+            
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using SqlCommand cmd = conn.CreateCommand();
+                {
+                    cmd.CommandText = "INSERT INTO Employee (FirstName, LastName, DepartmentId)" +
+                        "              VALUES (@firstName, @lastName, @departmentId)";
+                    cmd.Parameters.Add(new SqlParameter("@firstName", employee.FirstName));
+                    cmd.Parameters.Add(new SqlParameter("@lastName", employee.LastName));
+                    cmd.Parameters.Add(new SqlParameter("@departmentId", employee.DepartmentId));
+                    cmd.ExecuteNonQuery();
+                }
+            }
 
         }
 
@@ -330,22 +373,37 @@ namespace DepartmentsEmployees.Data
         /// </summary>
         public void UpdateEmployee(int id, Employee employee)
         {
-            /*
-             * TODO: Complete this method using an UPDATE statement with SQL
-             *  Remember to use SqlParameters!
-             */
-        }
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"UPDATE Employee
+                                        SET DepartmentId = @newDepartmentId
+                                        WHERE Id = @id";
+                    cmd.Parameters.Add(new SqlParameter("@newDepartmentId", employee.DepartmentId));
+                    cmd.Parameters.Add(new SqlParameter("@id", id));
 
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
 
         /// <summary>
         ///  Delete the employee with the given id
         /// </summary>
         public void DeleteEmployee(int id)
         {
-            /*
-             * TODO: Complete this method using a DELETE statement with SQL
-             *  Remember to use SqlParameters!
-             */
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = "DELETE FROM Employee WHERE Id = @id";
+                    cmd.Parameters.Add(new SqlParameter("@id", id));
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
     }
 }

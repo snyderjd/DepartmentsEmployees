@@ -128,7 +128,7 @@ namespace DepartmentsEmployees
             repository.DeleteEmployee(dbJane.Id);
             employees = repository.GetAllEmployeesWithDepartment();
 
-            PrintEmployeeReport("All Employees after updating Jane", employees);
+            PrintEmployeeReport("All Employees after firing Jane", employees);
 
             Pause();
 
@@ -146,15 +146,12 @@ namespace DepartmentsEmployees
         /// <param name="departments">Department data for the report</param>
         public static void PrintDepartmentReport(string title, List<Department> departments)
         {
-            /*
-             * TODO: Complete this method
-             *  For example a report entitled, "All Departments" should look like this:
-
-                All Departments
-                1: Marketing
-                2: Engineering
-                3: Design
-             */
+            
+            Console.WriteLine($"{title}");
+             for (int i = 0; i < departments.Count(); i++)
+            {
+                Console.WriteLine($"{i + 1}: {departments[i].DeptName}");
+            }
         }
 
         /// <summary>
@@ -170,7 +167,6 @@ namespace DepartmentsEmployees
         public static void PrintEmployeeReport(string title, List<Employee> employees)
         {
             /*
-             * TODO: Complete this method
              *  For example a report entitled, "All Employees", should look like this:
 
                 All Employees
@@ -186,6 +182,23 @@ namespace DepartmentsEmployees
                 3: Jamal Ross. Dept: Design
 
              */
+             if (title == "All Employees")
+            {
+                Console.WriteLine($"{title}");
+                for (int i = 0; i < employees.Count(); i++)
+                {
+                    Console.WriteLine($"{i + 1}: {employees[i].FirstName} {employees[i].LastName}");
+                }
+            } else
+            {
+                Console.WriteLine($"{title}");
+                for (int i = 0; i < employees.Count(); i++)
+                {
+                    Employee e = employees[i];
+                    Console.WriteLine($"{i + 1}: {e.FirstName} {e.LastName}. Dept: {e.Department.DeptName}");
+                }
+            }
+
         }
 
 
