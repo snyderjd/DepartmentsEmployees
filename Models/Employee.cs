@@ -12,7 +12,7 @@ namespace DepartmentsEmployees.Models
         public string LastName { get; set; }
 
         //T his is to hold the actual foreign key integer
-        public int DepartmentId { get; set; }
+        public int DepartmentId { get; set; } = -1;
 
         // This property is for storing the C# object representing the department
         public Department Department { get; set; }

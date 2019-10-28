@@ -195,7 +195,14 @@ namespace DepartmentsEmployees
                 for (int i = 0; i < employees.Count(); i++)
                 {
                     Employee e = employees[i];
-                    Console.WriteLine($"{i + 1}: {e.FirstName} {e.LastName}. Dept: {e.Department.DeptName}");
+                    if (e.DepartmentId != -1)
+                    {
+                        Console.WriteLine($"{i + 1}: {e.FirstName} {e.LastName} Dept: {e.Department.DeptName}");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"{i + 1}: {e.FirstName} {e.LastName} Dept:");
+                    }
                 }
             }
 

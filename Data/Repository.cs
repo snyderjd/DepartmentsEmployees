@@ -195,22 +195,22 @@ namespace DepartmentsEmployees.Data
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT Id, FirstName, LastName, DepartmentId FROM Employee";
+                    cmd.CommandText = "SELECT Id, FirstName, LastName FROM Employee";
                     SqlDataReader reader = cmd.ExecuteReader();
 
+                    Employee employee = null;
                     List<Employee> employees = new List<Employee>();
                     while (reader.Read())
                     {
-                        Employee employee = new Employee
-                        {
+                        employee = new Employee
+                            {
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
                             FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
-                            LastName = reader.GetString(reader.GetOrdinal("LastName")),
-                            DepartmentId = reader.GetInt32(reader.GetOrdinal("DepartmentId"))
+                            LastName = reader.GetString(reader.GetOrdinal("LastName"))
                         };
-
+                        
                         employees.Add(employee);
-                    }
+                }
 
                     reader.Close();
 
